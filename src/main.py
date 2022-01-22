@@ -6,10 +6,15 @@ class NoughtsAndCrosses:
         pass
 
     def __display_menu(self):
-        pass
+        print("Menu\n" + "-" * 22 + "\n1. Player vs Player\n2. Player vs Computer\n" + "-" * 22)
 
     def __display_board(self):
-        pass
+        print(self.board[0][0] + " | " + self.board[0][1] + " | " + self.board[0][2])
+        print("-" * 10)
+        print(self.board[1][0] + " | " + self.board[1][1] + " | " + self.board[1][2])
+        print("-" * 10)
+        print(self.board[2][0] + " | " + self.board[2][1] + " | " + self.board[2][2])
+        print("-" * 10)
 
     def __add_piece(self):
         pass
@@ -26,6 +31,7 @@ class Player:
         self.score = ""
         self.symbol = ""
 
-    
+if __name__ == '__main__':
+	NoughtsAndCrosses()   
 
     
