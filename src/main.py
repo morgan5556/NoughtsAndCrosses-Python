@@ -1,3 +1,5 @@
+import random
+
 class NoughtsAndCrosses:
     def __init__(self):
 
@@ -31,7 +33,7 @@ class NoughtsAndCrosses:
                 case '1':
                     self.__run_player_versus_player()
                 case '2':
-                    pass
+                    self.__run_player_vs_computer()
                 case '3':
                     print("Thanks for Playing!")
                     break
@@ -58,6 +60,7 @@ class NoughtsAndCrosses:
                 winner = self.__check_for_win(self.playerOne.get_symbol())
 
                 if winner == True:
+                    self.__display_board()
                     print(self.playerOne.get_name() + " has won the game!\n\n")
                     break
 
@@ -68,12 +71,78 @@ class NoughtsAndCrosses:
                 winner = self.__check_for_win(self.playerTwo.get_symbol())
 
                 if winner == True:
-                    print(self.playerOne.get_name() + " has won the game!\n\n")
+                    self.__display_board()
+                    print(self.playerTwo.get_name() + " has won the game!\n\n")
                     break
 
                 self.turn -= 1
 
             if winner == "Draw":
+                self.__display_board()
+                print("The game has resulted in a draw!\n\n")
+                break
+
+        self.__reset_game()
+
+    def __run_player_vs_computer(self):
+        player_select = input("Please select X or O: ")
+
+        match player_select:
+                case 'X':
+                    self.playerOne = Player("X")
+                    self.playerOne.set_name(input("Player 1, please enter your name: "))
+
+                    self.playerTwo = Player("O")
+                    self.playerTwo.set_name("COMPUTER")
+                    self.playerTwo.set_computer(True)
+
+                case 'O':
+                    self.playerOne = Player("X")
+                    self.playerOne.set_name("COMPUTER")
+                    self.playerOne.set_computer(True)
+
+                    self.playerTwo = Player("O")
+                    self.playerTwo.set_name(input("Player 2, please enter your name: "))
+
+        while True:
+            if self.turn == 1:
+                isComputer = self.playerOne.get_computer()
+
+                if isComputer == True:
+                    self.__computer_adds_piece(self.playerOne.get_symbol())
+                elif isComputer == False:
+                    self.__display_board()
+                    self.__add_piece(self.playerOne.get_name(), self.playerOne.get_symbol())
+
+                winner = self.__check_for_win(self.playerOne.get_symbol())
+
+                if winner == True:
+                    self.__display_board()
+                    print(self.playerOne.get_name() + " has won the game!\n\n")
+                    break
+
+                self.turn += 1
+
+            elif self.turn == 2:
+                isComputer = self.playerTwo.get_computer()
+
+                if isComputer == True:
+                    self.__computer_adds_piece(self.playerTwo.get_symbol())
+                elif isComputer == False:
+                    self.__display_board()
+                    self.__add_piece(self.playerTwo.get_name(), self.playerTwo.get_symbol())
+
+                winner = self.__check_for_win(self.playerTwo.get_symbol())
+
+                if winner == True:
+                    self.__display_board()
+                    print(self.playerTwo.get_name() + " has won the game!\n\n")
+                    break
+
+                self.turn -= 1
+
+            if winner == "Draw":
+                self.__display_board()
                 print("The game has resulted in a draw!\n\n")
                 break
 
@@ -134,6 +203,33 @@ class NoughtsAndCrosses:
                 break
             else:
                 print("Not a valid move!")
+
+    def __computer_adds_piece(self, symbol):
+            while True:
+                position = str(random.randint(1, 9))
+                isValid = self.__check_valid_move(position)
+
+                if isValid == True:
+                    if position == "1":
+                        self.board[0][0] = symbol
+                    elif position == "2":
+                        self.board[0][1] = symbol
+                    elif position == "3":
+                        self.board[0][2] = symbol
+                    elif position == "4":
+                        self.board[1][0] = symbol
+                    elif position == "5":
+                        self.board[1][1] = symbol
+                    elif position == "6":
+                        self.board[1][2] = symbol
+                    elif position == "7":
+                        self.board[2][0] = symbol
+                    elif position == "8":
+                        self.board[2][1] = symbol
+                    elif position == "9":
+                        self.board[2][2] = symbol
+                    self.plays += 1
+                    break
 
     def __check_valid_move(self, position):
 
@@ -223,6 +319,7 @@ class Player:
 
         self.symbol = symbol
         self.name = ""
+        self.computer = False
 
     #-------------------- getters and setters --------------------
     def get_symbol(self):
@@ -231,8 +328,14 @@ class Player:
     def get_name(self):
         return self.name
 
+    def get_computer(self):
+        return self.computer
+
     def set_name(self, name):
         self.name = name
+
+    def set_computer(self, computer):
+        self.computer = computer
 
 if __name__ == '__main__':
 	NoughtsAndCrosses()   
