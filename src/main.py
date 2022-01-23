@@ -35,6 +35,8 @@ class NoughtsAndCrosses:
                 case '2':
                     self.__run_player_vs_computer()
                 case '3':
+                    pass
+                case '4':
                     print("Thanks for Playing!")
                     break
 
@@ -154,7 +156,7 @@ class NoughtsAndCrosses:
         This method displays the menu to the user.
         '''
 
-        print("Menu\n" + "-" * 22 + "\n1. Player vs Player\n2. Player vs Computer\n3. Quit\n" + "-" * 22)
+        print("Menu\n" + "-" * 22 + "\n1. Player vs Player\n2. Player vs Computer [Easy]\n3. Player vs Computer [Impossible]\n4. Quit\n" + "-" * 22)
 
     def __display_board(self):
 
