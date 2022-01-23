@@ -6,7 +6,7 @@ class NoughtsAndCrosses:
         self.__run_program_loop()
 
     def __run_program_loop(self):
-        print("Welcome to Noughts and Crosses\nMade by Morgan Lyons\n" + "-" * 22)
+        print("\nWelcome to Noughts and Crosses\nMade by Morgan Lyons\n" + "-" * 22)
 
         while True:
             self.__display_menu()
@@ -23,7 +23,13 @@ class NoughtsAndCrosses:
 
     def __run_player_versus_player(self):
         self.playerOne = Player("1", "X")
+        self.playerOne.set_name(input("Player 1, please enter your name: "))
+
         self.playerTwo = Player("2", "O")
+        self.playerTwo.set_name(input("Player 2, please enter your name: "))
+
+        print(self.playerOne.get_score())
+        print(self.playerTwo.get_score())
 
         while True:
             pass
@@ -50,10 +56,14 @@ class Player:
         self.score = 0
         self.player_number = player_number
         self.symbol = symbol
-        self.name = self.__set_name()
+        self.name = ""
 
-    def __set_name(self):
-        self.name = input("Player " + self.player_number + ", please enter your name: ")
+    #-------------------- getters and setters --------------------
+    def get_score(self):
+        return self.score
+
+    def set_name(self, name):
+        self.name = name
 
 if __name__ == '__main__':
 	NoughtsAndCrosses()   
