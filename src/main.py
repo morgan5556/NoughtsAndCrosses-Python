@@ -4,6 +4,7 @@ class NoughtsAndCrosses:
         self.playerTwo = ""
         self.board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
         self.turn = 1
+        self.plays = 0
         self.__run_program_loop()
 
     def __run_program_loop(self):
@@ -34,10 +35,26 @@ class NoughtsAndCrosses:
 
             if self.turn == 1:
                 self.__add_piece(self.playerOne.get_name(), self.playerOne.get_symbol())
+                winner = self.__check_for_win(self.playerOne.get_symbol())
+
+                if winner == True:
+                    print(self.playerOne.get_name() + " has won the game!")
+                    break
+
                 self.turn += 1
+
             elif self.turn == 2:
                 self.__add_piece(self.playerTwo.get_name(), self.playerTwo.get_symbol())
+                winner = self.__check_for_win(self.playerTwo.get_symbol())
+
+                if winner == True:
+                    print(self.playerOne.get_name() + " has won the game!")
+                    break
+
                 self.turn -= 1
+
+            if winner == "Draw":
+                print("The game has resulted in a draw!")
 
     def __display_menu(self):
         print("Menu\n" + "-" * 22 + "\n1. Player vs Player\n2. Player vs Computer\n3. Quit\n" + "-" * 22)
@@ -74,6 +91,7 @@ class NoughtsAndCrosses:
                     self.board[2][1] = symbol
                 elif position == "9":
                     self.board[2][2] = symbol
+                self.plays += 1
                 break
             else:
                 print("Not a valid move!")
@@ -104,9 +122,38 @@ class NoughtsAndCrosses:
         else:
             return True
 
-    def __check_for_win(self):
-        pass
+    def __check_for_win(self, symbol):
+        # checks for horizontal wins
+        if self.board[0] == [symbol, symbol, symbol]:
+            print("Test Code 1")
+            return True
+        elif self.board[1] == [symbol, symbol, symbol]:
+            print("Test Code 2")
+            return True
+        elif self.board[2] == [symbol, symbol, symbol]:
+            print("Test Code 3")
+            return True
 
+        # checks for vertical wins
+        if self.board[0][0] == symbol and self.board[1][0] == symbol and self.board[2][0] == symbol:
+            return True
+        elif self.board[0][1] == symbol and self.board[1][1] == symbol and self.board[2][1] == symbol:
+            return True
+        elif self.board[0][2] == symbol and self.board[1][2] == symbol and self.board[2][2] == symbol:
+            return True
+        
+        # checks for diagonal wins
+        if self.board[0][0] == symbol and self.board[1][1] == symbol and self.board[2][2] == symbol:
+            return True
+        elif self.board[0][2] == symbol and self.board[1][1] == symbol and self.board[2][0] == symbol:
+            return True
+
+        # checks for draw
+        if self.plays == 9:
+            return "Draw"
+
+        return False
+        
 class Player:
     def __init__(self, symbol): 
         self.score = 0
