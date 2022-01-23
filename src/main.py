@@ -12,7 +12,6 @@ class NoughtsAndCrosses:
         self.playerTwo = ""
         self.board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
         self.turn = 1
-        self.plays = 0
         self.__run_program_loop()
 
     def __run_program_loop(self):
@@ -201,7 +200,6 @@ class NoughtsAndCrosses:
                     self.board[2][1] = symbol
                 elif position == "9":
                     self.board[2][2] = symbol
-                self.plays += 1
                 break
             else:
                 print("Not a valid move!")
@@ -230,7 +228,6 @@ class NoughtsAndCrosses:
                         self.board[2][1] = symbol
                     elif position == "9":
                         self.board[2][2] = symbol
-                    self.plays += 1
                     break
 
     def __check_valid_move(self, position):
@@ -269,7 +266,7 @@ class NoughtsAndCrosses:
         '''
         This method checks to see if the user that has just played has won.
         It checks for horizontal wins, then vertical wins, then diagonal wins,
-        then finally checks for a draw if 9 "plays" have occured.
+        then finally checks if any moves are remaining.
         '''
 
         # checks for horizontal wins
@@ -295,9 +292,18 @@ class NoughtsAndCrosses:
             return True
 
         # checks for draw
-        if self.plays == 9:
+        moves_remaining = self.__is_moves_remaining()
+        
+        if moves_remaining == False:
             return "Draw"
 
+        return False
+
+    def __is_moves_remaining(self):
+        for x in range(3):
+            for y in range(3):
+                if self.board[x][y] in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+                    return True
         return False
 
     def __reset_game(self):
@@ -309,7 +315,6 @@ class NoughtsAndCrosses:
 
         self.board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
         self.turn = 1
-        self.plays = 0
 
 class Player:
     def __init__(self, symbol): 
