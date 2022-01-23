@@ -1,5 +1,11 @@
 class NoughtsAndCrosses:
     def __init__(self):
+
+        ''' 
+        This method declares all the variables that are needed for the game to 
+        run. From this, the program loop is executed.
+        '''
+
         self.playerOne = ""
         self.playerTwo = ""
         self.board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
@@ -8,11 +14,18 @@ class NoughtsAndCrosses:
         self.__run_program_loop()
 
     def __run_program_loop(self):
+
+        '''
+        This method runs the main program loop based off the user's selections
+        for the menu. Different methods are executed depending on the user input.
+        '''
+
         print("\nWelcome to Noughts and Crosses\nMade by Morgan Lyons\n" + "-" * 22)
 
         while True:
             self.__display_menu()
             user_input = input("Enter a Menu Option: ")
+            print("-" * 22)
 
             match user_input:
                 case '1':
@@ -24,6 +37,13 @@ class NoughtsAndCrosses:
                     break
 
     def __run_player_versus_player(self):
+
+        '''
+        This method runs the game loop for the player vs player mode. It 
+        instantiantes new players and has a main loop that allows the game
+        to run in an efficient way.
+        '''
+
         self.playerOne = Player("X")
         self.playerOne.set_name(input("Player 1, please enter your name: "))
 
@@ -38,7 +58,7 @@ class NoughtsAndCrosses:
                 winner = self.__check_for_win(self.playerOne.get_symbol())
 
                 if winner == True:
-                    print(self.playerOne.get_name() + " has won the game!")
+                    print(self.playerOne.get_name() + " has won the game!\n\n")
                     break
 
                 self.turn += 1
@@ -48,19 +68,32 @@ class NoughtsAndCrosses:
                 winner = self.__check_for_win(self.playerTwo.get_symbol())
 
                 if winner == True:
-                    print(self.playerOne.get_name() + " has won the game!")
+                    print(self.playerOne.get_name() + " has won the game!\n\n")
                     break
 
                 self.turn -= 1
 
             if winner == "Draw":
-                print("The game has resulted in a draw!")
+                print("The game has resulted in a draw!\n\n")
+                break
+
+        self.__reset_game()
 
     def __display_menu(self):
+
+        '''
+        This method displays the menu to the user.
+        '''
+
         print("Menu\n" + "-" * 22 + "\n1. Player vs Player\n2. Player vs Computer\n3. Quit\n" + "-" * 22)
 
     def __display_board(self):
-        print(self.board[0][0] + " | " + self.board[0][1] + " | " + self.board[0][2])
+
+        '''
+        This method displays the game board to the user.
+        '''
+
+        print("\n\n" + self.board[0][0] + " | " + self.board[0][1] + " | " + self.board[0][2])
         print("-" * 10)
         print(self.board[1][0] + " | " + self.board[1][1] + " | " + self.board[1][2])
         print("-" * 10)
@@ -68,6 +101,12 @@ class NoughtsAndCrosses:
         print("-" * 10)
 
     def __add_piece(self, name, symbol):
+
+        '''
+        This method adds pieces to the board, by first checking if it is a
+        valid move through another method.
+        '''
+
         while True:
             position = input(name + " [" + symbol + "], please enter a position: ")
             isValid = self.__check_valid_move(position)
@@ -97,6 +136,11 @@ class NoughtsAndCrosses:
                 print("Not a valid move!")
 
     def __check_valid_move(self, position):
+
+        '''
+        This method checks to see if the move chosen by the user is valid.
+        '''
+
         match position:
             case '1':
                 current_state = self.board[0][0]
@@ -123,15 +167,19 @@ class NoughtsAndCrosses:
             return True
 
     def __check_for_win(self, symbol):
+
+        '''
+        This method checks to see if the user that has just played has won.
+        It checks for horizontal wins, then vertical wins, then diagonal wins,
+        then finally checks for a draw if 9 "plays" have occured.
+        '''
+
         # checks for horizontal wins
         if self.board[0] == [symbol, symbol, symbol]:
-            print("Test Code 1")
             return True
         elif self.board[1] == [symbol, symbol, symbol]:
-            print("Test Code 2")
             return True
         elif self.board[2] == [symbol, symbol, symbol]:
-            print("Test Code 3")
             return True
 
         # checks for vertical wins
@@ -153,17 +201,30 @@ class NoughtsAndCrosses:
             return "Draw"
 
         return False
-        
+
+    def __reset_game(self):
+
+        '''
+        This resets all the variables in the game class to their original
+        state for the game to restart.
+        '''
+
+        self.board = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
+        self.turn = 1
+        self.plays = 0
+
 class Player:
     def __init__(self, symbol): 
-        self.score = 0
+
+        ''' 
+        This method declares all the variables that are needed for the Player
+        class.
+        '''
+
         self.symbol = symbol
         self.name = ""
 
     #-------------------- getters and setters --------------------
-    def get_score(self):
-        return self.score
-
     def get_symbol(self):
         return self.symbol
 
